@@ -5,3 +5,43 @@ http://linuxperf.com/?p=67
    但缺点是不灵活，比如要求物理内存必须是连续的一整块而且不能是高位地址等等，也不能充分满足虚拟机的需要
 3. 那么IOMMU的出现，作用就是dma remap，把io设备所需要的dma地址(or PA)转换成连续的io地址，也就是iova, 那么dma address --> iova的过程就是dma remap.
 4. 
+
+http://www.spasvo.com/news/html/201752393143.html
+Linux iommu和vfio概念空间解构
+    在Linux的概念空间中，硬件的设备，用device来代表。
+    设备用总线类型bus_type来区分。比如众所皆知的pci_device，或者没爹没娘的platform_device。smmu控制器，本身是一种device，对于ARM来说，它现在是一种平台设备。
+    不同总线有什么设备，可以从/sys/bus/<bus>/devices/目录中全部列出来。
+　　bus_type说明的是发现设备的方法，不表明设备的功能，设备的功能用class来表达，/sys/class列出了从功能角度对设备的表达。
+    从这个角度来收，smmu是一种iommu class的设备（之所以不叫smmu而叫iommu，因为intel先上的主线，所以用intel的名字，现在开源，主要是抢名称空间，因为名称空间意味着整个行业为谁服务）
+　　所以我们现在有了device和iommu两个概念了。下一步是device和iommu的关联.
+    从硬件的逻辑空间，应该是每个device有一个指向iommu的指针，但如果软件也这样做，掩盖了一个事实：如果两个设备共享同一个streamid，那么修改其中一个设备的页表体系，也相当于修改了另一个设备的页表体系。
+    所以，修改页表的小单位不是设备，而是stream id。为此，Linux的模型是增加一个iommu_group的概念，iommu_group代表共享同一个streamid的一组device（表述在/sys/kernel/iommu_group中）。
+
+    所以，整个概念空间是：
+　　SMMU控制器自身的发现：总线扫描发现设备(device）（ARM是平台设备），设备匹配SMMU驱动（ARM现在是drivers/iommu/arm-smmu*.c），SMMU驱动probe的时候给自己支持的总线设置bus->iommu_ops，让总线具有了iommu attach的能力。
+　　设备的SMMU关联：总线扫描发现了一般的设备，总线的发现流程负责调用iommu_ops给这个设备加上iommu_group，然后让iommu_group指向对应的iommu控制器。
+　　这个过程实际要求SMMU驱动认识设备的SMMU Topo，很明显这个Topo是硬件设计的结果，要不是硬件提供自动发现机制（例如PCIE），要不只能在固件中描述（比如DTS或者ACPI），这个固件，称为iommu_fwspec，属于device，在device发现的时候可以生成。
+
+    IOMMU的整个框架，首先提供的是针对设备的DMA能力
+    也是说，当我们发起dma_map的时候，设备定位的streamid，进程定位了substreamid（这个概念是iommu_device通过iommu_domain种入）
+    VA送下来的时候，从设备定位group，group匹配的iommu_device，device决定了iommu_domain，驱动可以综合全部的信息写到SMMU硬件中了。
+
+    VFIO的目的（从SMMU的角度来说）是把设备的DMA能力直接暴露到用户态。
+
+platform devices 为什么是没爹娘养的？ 各种devices之间的定义的区别。
+
+
+http://www.voidcn.com/article/p-phvsacqn-bcz.html
+    目前PC架构最多有256PCI总线，于是IOMMU用一个称为root entry的数据结构描述PCI总线，总共256个root entry构成一张表。
+    每条PCI总线最多允许256个设备，IOMMU用context entry描述一个PCI设备（或者是PCI桥），256个context entry构成一张表。
+    所以就有了如图的关系。我们知道，PCI设备用 {BUS:DEV:FUNC}（当然，还有个segment，不过似乎PC架构都只有一个segment，这个暂时忽略）描述一个设备。
+    所以对于一个特定设备，用bus号做索引root entry表，用dev号索引context entry表可以找到描述该设备的的context entry。
+    context entry中有一个指针指向一章I/O页表，当设备发起DMA操作时，IOMMU会根据该页表把设备的DMA地址转换成该设备可以访问内存区域的地址。  
+    所以只要为设备建一张I/O页表，就可以使设备只能访问规定的内存区域了。当然，也可以把该页表当成跳板，让只能寻址32bit地址空间的设备访问到64bit地址空间中去。  
+
+
+英特尔的VT虚拟化技术包括分别针对处理器、芯片组、网络的VT-x、VT-d和VT-c三种技术。
+    1、针对处理器的英特尔VT-x技术：包括英特尔虚拟化灵活迁移技术（Intel VT FlexMigration）、英特尔VT FlexPriority、英特尔VT扩展页表（Extended Page Tables）；
+    2、针对芯片组的英特尔VT-d技术：支持直接 I/O 访问的VT虚拟化技术；
+    3、针对网络的英特尔VT-c技术：包括虚拟机设备队列（VMDq）、 虚拟机直接互连（VMDc）。
+简单来说：VT包括VT-x、VT-d和VT-c。VT-x只是英特尔VT技术中的一项。
