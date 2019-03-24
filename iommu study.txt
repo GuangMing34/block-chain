@@ -1,0 +1,7 @@
+http://linuxperf.com/?p=67
+1. I/O设备可以直接存取内存，称为DMA(Direct Memory Access)；
+2. DMA要存取的内存地址称为DMA地址（也可称为BUS address）。
+   在DMA技术刚出现的时候，DMA地址都是物理内存地址，简单直接。
+   但缺点是不灵活，比如要求物理内存必须是连续的一整块而且不能是高位地址等等，也不能充分满足虚拟机的需要
+3. 那么IOMMU的出现，作用就是dma remap，把io设备所需要的dma地址(or PA)转换成连续的io地址，也就是iova, 那么dma address --> iova的过程就是dma remap.
+4. 
