@@ -4,12 +4,12 @@ from time import time
 import hashlib as hasher
 
 ## encrpty lib
-from Crypto.Hash import SHA256, SHA, SHA512
+#from Crypto.Hash import SHA256, SHA, SHA512
 
 
 ###global variable
 file_need_encrpty = "./test_file/test1.docx"
-file_need_encrpty_test = "./test_file/test1."
+file_need_encrpty_test = "./test_file/test1.txt"
 
 
 '''
@@ -19,7 +19,10 @@ Todo:
 
 '''
 
+def my_print(x):
+    print(x)
 
+## get mac id
 def get_id_of_computer():
     import uuid
     node = uuid.getnode()
@@ -42,10 +45,11 @@ class MyBlock:
         h.update(need_hash)
         return h.hexdigest()
 
+
 # Manually construct a block with
 # index zero and arbitrary previous hash
 def create_genesis_block():
-    return MyBlock(0, time(), get_id_of_computer())
+    return MyBlock(0, time(), get_id_of_computer(), "0")
 
 ## get next block by last block
 def next_block(last_block):
@@ -55,19 +59,43 @@ def next_block(last_block):
     this_hash = last_block.hash
     return MyBlock(this_index, this_timestamp, this_id, this_hash)
 
+def get_block_id(block):
+    return block.id
 
+def block_chain_check(blockchain, block_size):
+    i = 0
+    for block in blockchain:
+        if(MyBlock.hash_block(blockchain[i + 1].previous_hash) != block.hash):
+            return False
+        i = i + 1
 
+    return True
+
+def get_hash_legth():
+    block = MyBlock(0, time(), get_id_of_computer())
+    return len(block.hash)
 
 ####file encrypt part
 def read_and_print_file():
+    #hash_len = get_hash_legth()
+    hash_len = 10
+    total_len = 0
+
     with open(file_need_encrpty_test,'rb') as f:
         print("file open success:" + file_need_encrpty_test)
     #with open(file_need_encrpty,'rb') as f:
         words = f.read(10)
-        if (words):
-            print(words)
-        else:
-            print("None")
+        while 1:
+            my_print(words)
+            if (len(words) == 10):
+                total_len = total_len + 10
+                words = f.read(10)
+                continue
+            else:
+                total_len = total_len + len(words)
+                print("len :" + str(len(words)))
+                print("total len:" + str(total_len))
+                break;
 
 
 
@@ -91,6 +119,9 @@ def block_chain_flow():
         # Tell everyone about it!
         print("Block %s has been added to the blockchain!" %format(block_to_add.index))
         print("Hash: %s\n" %format(block_to_add.hash))
+
+    ## block chain check
+    block_chain_check(blockchain, num_of_blocks_to_add)
 
 
 
