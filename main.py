@@ -6,6 +6,12 @@ import hashlib as hasher
 ## encrpty lib
 from Crypto.Hash import SHA256, SHA, SHA512
 
+
+###global variable
+file_need_encrpty = "./test_file/test1.docx"
+file_need_encrpty_test = "./test_file/test1."
+
+
 '''
 Todo:
 ### history data
@@ -50,6 +56,21 @@ def next_block(last_block):
     return MyBlock(this_index, this_timestamp, this_id, this_hash)
 
 
+
+
+####file encrypt part
+def read_and_print_file():
+    with open(file_need_encrpty_test,'rb') as f:
+        print("file open success:" + file_need_encrpty_test)
+    #with open(file_need_encrpty,'rb') as f:
+        words = f.read(10)
+        if (words):
+            print(words)
+        else:
+            print("None")
+
+
+
 ###start
 # Create the blockchain and add the genesis block
 def block_chain_flow():
@@ -72,6 +93,8 @@ def block_chain_flow():
         print("Hash: %s\n" %format(block_to_add.hash))
 
 
+
 if __name__ == "__main__":
     # execute only if run as a script
-    block_chain_flow()
+    #block_chain_flow()
+    read_and_print_file()
