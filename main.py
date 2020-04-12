@@ -1,41 +1,77 @@
-import hashlib
-import json
 from time import time
 
-def get_id_of_computer(self):
-    return "test"
+#hash lib
+import hashlib as hasher
 
-class Blockchain(object):
-    def __init__(self):
-        # block-chain data store here
-        self.chain = []
-        # Create the genesis block
-        self.new_block(previous_hash = 0, proof = 100)
-    def new_block(self, proof, previous_hash=None):
-        """
-        Éú³ÉÐÂ¿é
-        :param proof: <int> The proof given by the Proof of Work algorithm
-        :param previous_hash: (Optional) <str> Hash of previous Block
-        :return: <dict> New Block
-        """
-        block = {
-            'index': len(self.chain) + 1,
-            'timestamp': time(),
-            'proof': proof,
-            'previous_hash': previous_hash or self.hash(self.chain[-1]),
-        }
+## encrpty lib
+from Crypto.Hash import SHA256, SHA, SHA512
 
-        self.chain.append(block)
-        return block
+'''
+Todo:
+### history data
+    record any history
 
-    @property
-    def last_block(self):
-        return self.chain[-1]
+'''
+
+
+def get_id_of_computer():
+    import uuid
+    node = uuid.getnode()
+    mac = uuid.UUID(int = node).hex[-12:]
+    return mac
+
+# class define, for generate block unit
+class MyBlock:
+    def __init__(self, index, timestamp, id, previous_hash = "0"):
+        self.index = index
+        self.timestamp = time()
+        self.id = id
+        self.previous_hash = previous_hash #previous hash value
+        need_hash = (str(index) + str(timestamp) + str(id) + str(previous_hash)).encode("utf-8")
+        self.hash = self.hash_block(need_hash) # current node hash value
+
     @staticmethod
-    def hash(block):
-        if 'get_id_of_computer' in dir():
-            block_string = get_id_of_computer()
-        else:
-            print("get_id_of_computer is not in dir, dir:" + dir())
-            block_string = "test"
-        return hashlib.sha256(block_string).hexdigest() 
+    def hash_block(need_hash):
+        h = SHA256.new()
+        h.update(need_hash)
+        return h.hexdigest()
+
+# Manually construct a block with
+# index zero and arbitrary previous hash
+def create_genesis_block():
+    return MyBlock(0, time(), get_id_of_computer())
+
+## get next block by last block
+def next_block(last_block):
+    this_index = last_block.index + 1
+    this_timestamp = time()
+    this_id = get_id_of_computer()
+    this_hash = last_block.hash
+    return MyBlock(this_index, this_timestamp, this_id, this_hash)
+
+
+###start
+# Create the blockchain and add the genesis block
+def block_chain_flow():
+    blockchain = [create_genesis_block()]
+    previous_block = blockchain[0]
+
+    print(previous_block.hash + '\n' + previous_block.id)
+
+    # How many blocks should we add to the chain
+    # after the genesis block
+    num_of_blocks_to_add = 20
+
+    # Add blocks to the chain
+    for i in range(0, num_of_blocks_to_add):
+        block_to_add = next_block(previous_block)
+        blockchain.append(block_to_add)
+        previous_block = block_to_add
+        # Tell everyone about it!
+        print("Block %s has been added to the blockchain!" %format(block_to_add.index))
+        print("Hash: %s\n" %format(block_to_add.hash))
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    block_chain_flow()
