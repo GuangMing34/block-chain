@@ -1,12 +1,14 @@
 def log_raw(x):
-    print(x)
+    return
+    #print(x)
 
 def debug(x):
-    pass
-    print(x)
+    return
+    #print(x)
 
 def log_out(x):
     print(x)
 
 def log_str(x):
-    print(str(x))
+    return
+    #print(str(x))

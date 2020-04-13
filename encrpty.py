@@ -9,10 +9,9 @@ def encrpty_file(file_path, pubkey):
     max_length = int(get_max_length(pubkey))
     if pubkey:
         cipher_public = Crypto.Cipher.PKCS1_v1_5.new(pubkey)
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding='UTF-8') as f:
             while True:
                 message = f.read(max_length)
-                print(message)
                 if message != "":
                     #cipher_text = cipher_text + base64.b64encode(cipher_public.encrypt(message.encode('utf-8')))
                     cipher_text = cipher_text + cipher_public.encrypt(message.encode(encoding='utf-8'))
@@ -35,7 +34,6 @@ def encrpty_file(file_path, pubkey):
 ###start
 # Create the blockchain and add the genesis block
 def block_chain_flow():
-    #private_key = get_key.get_private_key_bytes()
     private_key = get_key.get_private_key_strs()
     ## store key @ block 0
     blockchain = [create_genesis_block(private_key)]
@@ -45,19 +43,14 @@ def block_chain_flow():
     a = input("are you want to add another device? y :yes  n :No:")
     while True:
         if (a == 'y'):
-            mac_id = input("input your mac_id, please input numbers only")
+            mac_id = input("input your mac_id, please input numbers only:")
             block_to_add = next_block(previous_block, mac_id)
             blockchain.append(block_to_add)
             previous_block = block_to_add
             blockchain_len = blockchain_len + 1
             a = input("are you want to add another device? y :yes  n :No:")
         else:
-            log.log_out("add done，blocks below:")
-            for i in range(0, blockchain_len):
-                log.debug("Block %s has been added to the blockchain!" %format(blockchain[i].index))
-                log.debug("previous hash:")
-                log.debug(blockchain[i].previous_hash)
-                log.debug("Hash: %s\n" %format(blockchain[i].hash))
+            #log.log_out("add done，blocks below:")
             break
 
     save_blockchain(blockchain, blockchain_len)

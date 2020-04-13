@@ -64,19 +64,12 @@ def create_genesis_block(id):
 
 ## get next block by last block
 def next_block(last_block, mac_id):
-    this_index = mac_id
+    this_index = str(int(last_block.index) + 1)
     this_timestamp = time()
-    this_id = get_id_of_computer()
+    this_id = mac_id
     this_hash = last_block.hash
     return MyBlock(this_index, this_timestamp, this_id, this_hash)
 
-'''
-                f.write(str(block.index) + '\n')
-                f.write(str(block.timestamp) + '\n')
-                f.write(str(block.id) + '\n')
-                f.write(str(block.previous_hash) + '\n')
-                f.write(str(block.hash) + '\n')
-'''
 
 def block_member_print(block):
     log.log_raw("index, timestamp, id, previous_hash, hash==========>")
@@ -135,14 +128,14 @@ def read_and_print_file():
 def check_mac_id_in_blockchain(blockchain ,mac_id):
     i = 0
     for block in blockchain:
-        i += 1
         log.debug("id  mac_id")
-        log.log_raw(block.id)
+        log.log_raw(blockchain[i].id)
         log.log_raw(mac_id)
     
-        if block.id == mac_id:
-            print("check %d times" %i)
+        if blockchain[i].id == mac_id:
+            log.debug("check %d times" %i)
             return True
+        i += 1
 
     return False
 
@@ -165,7 +158,6 @@ def save_blockchain(blockchain, block_size):
                 f.write(str(block.id) + '\n')
                 f.write(str(block.previous_hash) + '\n')
                 f.write(str(block.hash) + '\n')
-
             i = i + 1
 
 def get_blockchain(blockchain_file):
@@ -176,12 +168,12 @@ def get_blockchain(blockchain_file):
 
     with open(blockchain_file, 'r') as f:
         blockchain_size = f.readline()
-        block = create_genesis_block(0)
         priv = ''
         for i in range(0, int(blockchain_size)):
+            block = create_genesis_block("0")
             if i == 0:
                 while True:
-                    current_line = f.readline().split("\n\n")[0]
+                    current_line = f.readline()
                     if current_line != "\n":
                         priv = priv + current_line
                     else:
@@ -190,15 +182,13 @@ def get_blockchain(blockchain_file):
                 block.index = f.readline().split("\n")[0]
                 block.timestamp = f.readline().split("\n")[0]
                 block.id = f.readline().split("\n")[0]
+                block.hash = f.readline().split("\n")[0]
             else:
                 block.index = f.readline().split("\n")[0]
                 block.timestamp = f.readline().split("\n")[0]
                 block.id = f.readline().split("\n")[0]
                 block.previous_hash = f.readline().split("\n")[0]
-
-            block.hash = f.readline().split("\n")[0]
-            log.log_raw("print block:")
-            block_member_print(block)
+                block.hash = f.readline().split("\n")[0]
             blockchain.append(block)
     return blockchain
     

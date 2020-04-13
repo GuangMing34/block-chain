@@ -43,11 +43,10 @@ def get_private_key_strs():
 def get_public_key():
     # public key
     if os.path.exists(PublicKey_path):
-        log.debug("exist public key")
         with open(PublicKey_path, 'r') as f:
             key_raw = f.read()
         key = RSA.importKey(key_raw)
-        #log.log_raw(key)
+        log.log_raw(key)
         return key
     else :
         log.debug("doesn't exist public key!!!!")

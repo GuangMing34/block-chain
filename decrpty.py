@@ -20,22 +20,7 @@ def decrypt_file(file_path, private_key):
         #text += str(out_data).encode(encoding='utf-8').strip() + b"\n"
     with open(file_path, 'wb') as f:
         f.write(text)
-
     return True
-'''
-        while True:
-            message = f.read(encrpty_step)
-            if message == "":
-                break
-            print("pass")
-            print(message)
-            new_message = cipher_private.decrypt(base64.b64decode(message), "err")
-            if new_message == error:
-                print("error:")
-                return
-            print(new_message)
-            text = text + new_message
-'''
 
 
 def decrpty(blockchain, key_priv):
@@ -51,32 +36,28 @@ if __name__ == "__main__":
     #get bc
     blockchain = get_blockchain(blockchain_file)
     if blockchain:
-        log.debug("get blockchain pass")
+        log.debug("123113")
     else:
         log.debug("get blockchain fail, return")
         os._exit()
 
     #id compare
     id = get_id_of_computer()
-
     ret = check_mac_id_in_blockchain(blockchain, id)
     if ret:
-        log.debug("check id pass")
+        log.debug("xxx")
     else:
         log.debug("check id fail, return")
         os._exit()
     
     #get key
     key = get_private_key_from_block(blockchain)
-    log.log_raw("xxxxxxasdsfa")
-    log.log_raw(key)
-    log.log_raw("xxxxxxasdsfa")
 
     if key:
-        log.debug("get key pass xxxxxxx======>")
-        log.log_raw(key)
+        log.debug("get key pass")
     else:
         log.debug("get key fial, returm")
         os._exit()
 
     decrpty(blockchain, key)
+    log.log_out("decrpty done")

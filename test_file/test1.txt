@@ -1,15 +1,57 @@
-3
-Block 0 has been added to the blockchain!
-Private RSA key at 0x12EB8FC2F88
-Hash: 2a31eaaa6a8346298171861b4a959390d91a89f7c304d67f1e34fe4afef7fa67
+                                  _   _ ____  _
+                              ___| | | |  _ \| |
+                             / __| | | | |_) | |
+                            | (__| |_| |  _ <| |___
+                             \___|\___/|_| \_\_____|
 
-Block 1111 has been added to the blockchain!
-2a31eaaa6a8346298171861b4a959390d91a89f7c304d67f1e34fe4afef7fa67
-Hash: 77e6e9524bf9aa94355bb44c6f54cc43757d450dc8d27bc89ead6f6a056ecdb4
+README
 
-Block 2222 has been added to the blockchain!
-77e6e9524bf9aa94355bb44c6f54cc43757d450dc8d27bc89ead6f6a056ecdb4
-Hash: 7dd54d22dbecc4d4f6ddea2a09df228cf275bbcb42257d3b443af9e8732b435f
+  Curl is a command line tool for transferring data specified with URL
+  syntax. Find out how to use curl by reading the curl.1 man page or the
+  MANUAL document. Find out how to install Curl by reading the INSTALL
+  document.
 
+  libcurl is the library curl is using to do its job. It is readily
+  available to be used by your software. Read the libcurl.3 man page to
+  learn how!
 
-private_key = get_key.get_private_key()
+  You find answers to the most frequent questions we get in the FAQ document.
+
+  Study the COPYING file for distribution terms and similar. If you distribute
+  curl binaries or other binaries that involve libcurl, you might enjoy the
+  LICENSE-MIXING document.
+
+  All of those documents and more can be found in the docs/ directory.
+
+CONTACT
+
+  If you have problems, questions, ideas or suggestions, please contact us
+  by posting to a suitable mailing list. See https://curl.haxx.se/mail/
+
+  All contributors to the project are listed in the THANKS document.
+
+WEB SITE
+
+  Visit the curl web site for the latest news and downloads:
+
+        https://curl.haxx.se/
+
+GIT
+
+  To download the very latest source off the GIT server do this:
+
+    git clone https://github.com/curl/curl.git
+
+  (you'll get a directory named curl created, filled with the source code)
+
+SECURITY PROBLEMS
+
+  Report suspected security problems via our HackerOne page and not in public!
+
+    https://hackerone.com/curl
+
+NOTICE
+
+  Curl contains pieces of source code that is Copyright (c) 1998, 1999
+  Kungliga Tekniska H鏋歡skolan. This notice is included here to comply with the
+  distribution terms.
