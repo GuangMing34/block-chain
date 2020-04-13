@@ -11,12 +11,18 @@ PrivateKey_path = "D:/mykey.pem"
 
 
 def print_private_key():
-    with open(PrivateKey_path, 'r') as f:
-        print(f.read())
+    with open(PrivateKey_path, 'rb') as f:
+        print("private key:")
+        key = f.read()
+    print(key)
+    print(type(key))
 
 def print_public_key():
-    with open(PublicKey_path, 'r') as f:
-        print(f.read())
+    with open(PublicKey_path, 'rb') as f:
+        print("public key:")
+        key = f.read()
+    print(key)
+    print(type(key))
 
 
 
@@ -34,7 +40,7 @@ if False: #os.path.exists(PublicKey_path):
 else :
     with open(PublicKey_path,'wb') as f:
         f.write(public_key_val)
-        print_public_key()
+    print_public_key()
 
 # private key
 if False: #os.path.exists(PrivateKey_path):
@@ -43,6 +49,6 @@ if False: #os.path.exists(PrivateKey_path):
 else :
     with open(PrivateKey_path,'wb') as f:
         f.write(private_key_val)
-        print_private_key()
+    print_private_key()
 
 

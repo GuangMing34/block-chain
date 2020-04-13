@@ -1,1 +1,15 @@
-^#ç»’(öù‹»»1ØÐ˜{Nð'$A…2«ÊJWãê_#X–—r±î1æ¤¦ÌcÑšÆyG'ôåÍTr7tÃò¹+ºÙÅ5S¼Va”É°7;O®¯îjL¾qI  ÛŠâ»?`úÜl(¼HswÜäèõ´ê°ÖQÜðÉÐŠlIŽ†ƒ˜|ÞÃ0$hÂNE,ÆZØfÐióD=±rEŒdõ¬†<û"Ñ^ÐiõF\·%(½Yq°ê³dûœÞ|—Ó´×#ªåWM!Z!~­3•ÊX,ÈkŽ|†T`,G8Ð-öÈñB8ºzÜÄpjw¡usQSyÇ…Ðf~(
+3
+Block 0 has been added to the blockchain!
+Private RSA key at 0x12EB8FC2F88
+Hash: 2a31eaaa6a8346298171861b4a959390d91a89f7c304d67f1e34fe4afef7fa67
+
+Block 1111 has been added to the blockchain!
+2a31eaaa6a8346298171861b4a959390d91a89f7c304d67f1e34fe4afef7fa67
+Hash: 77e6e9524bf9aa94355bb44c6f54cc43757d450dc8d27bc89ead6f6a056ecdb4
+
+Block 2222 has been added to the blockchain!
+77e6e9524bf9aa94355bb44c6f54cc43757d450dc8d27bc89ead6f6a056ecdb4
+Hash: 7dd54d22dbecc4d4f6ddea2a09df228cf275bbcb42257d3b443af9e8732b435f
+
+
+private_key = get_key.get_private_key()
