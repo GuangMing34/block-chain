@@ -114,8 +114,8 @@ def encrpty_file(file_path, pubkey):
             log.log_raw(message)
     else:
         win32api.MessageBox(0, "error", "Error",win32con.MB_ICONWARNING)
-        return False
-    return True
+        return
+
 ####file decrypt part
 
 def decrypt_file(file_path, private_key):
@@ -135,6 +135,9 @@ def decrypt_file(file_path, private_key):
             f.write(text)
     else:
         win32api.MessageBox(0, "No permission", "Error",win32con.MB_ICONWARNING)
+        return False
+
+    return True
 
 
 def read_and_print_file():
@@ -188,34 +191,92 @@ def block_chain_flow():
                 log.debug(blockchain[i].previous_hash)
                 log.debug("Hash: %s\n" %format(blockchain[i].hash))
             break
-
-    save_blockchain(blockchain, blockchain_len)
     ## block chain check
     check = block_chain_check(blockchain, blockchain_len)
     if check:
         pubkey = get_key.get_public_key()
-        if pubkey:
-            encrpty_file(file_need_encrpty_test, pubkey)
-            log.log_out("file encrpty done!" + file_need_encrpty_test)
+        encrpty_file(file_need_encrpty_test, pubkey)
+        log.log_out("file encrpty done!" + file_need_encrpty_test)
     else:
         log.debug("check fail")
         return False
 
 
-def save_blockchain(blockchain, block_size):
-    with open(blockchain_file, 'w') as f:
-        f.write(str(block_size) + '\n')
-        for block in blockchain:
+def get_blockchain(blockchain_file):
+    blockchain = []
+    if os.path.exists(blockchain_file):
+        log.debug("file exist")
+    else:
+        log.debug("does not exist file, exit")
+        return False
+
+    with open(blockchain_file, 'r') as f:
+        blockchain_size = f.readline()
+        block = create_genesis_block(0)
+        for i in range(0, int(blockchain_size)):
+            '''
             f.write(str(block.index) + '\n')
             f.write(str(block.timestamp) + '\n')
             f.write(str(block.id) + '\n')
             f.write(str(block.previous_hash) + '\n')
             f.write(str(block.hash) + '\n')
+            '''
 
+            block.index = f.readline().split("\n")[0]
+            block.timestamp = f.readline().split("\n")[0]
+            block.id = f.readline().split("\n")[0]
+            block.previous_hash = f.readline().split("\n")[0]
+            block.hash = f.readline().split("\n")[0]
+            blockchain.append(block)
+    return blockchain
 
+def check_mac_id_in_blockchain(blockchain ,mac_id):
+    i = 0
+    for block in blockchain:
+        i += 1
+        log.debug("id  mac_id")
+        log.log_raw(block.id)
+        log.log_raw(mac_id)
+    
+        if block.id == mac_id:
+            print("check %d times" %i)
+            return True
+
+    print("check %d times" %i)
+    return False
+    
+def get_private_key_from_block(blockchain):
+    return blockchain[0].id
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    block_chain_flow()
-    #read_and_print_file()
+    id = get_id_of_computer()
+    blockchain = get_blockchain(blockchain_file)
+    if blockchain:
+        log.debug("get blockchain pass")
+    else:
+        log.debug("get blockchain fail, return")
+        os._exit()
+    
+    ret = check_mac_id_in_blockchain(blockchain, id)
+    if ret:
+        log.debug("check id pass")
+    else:
+        log.debug("check id fail, return")
+        os._exit()
+    
+    key = get_private_key_from_block(blockchain)
+
+    if key:
+        log.debug("get key pass")
+    else:
+        log.debug("get key fial, returm")
+        os._exit()
+    
+    ret = decrypt_file(file_need_encrpty_test , key)
+    if ret:
+        log.debug("decrpty pass")
+    else:
+        log.debug("decrypt_file fail, return")
+        os._exit()
