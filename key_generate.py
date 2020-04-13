@@ -34,7 +34,7 @@ print(public_key_val)
 print(private_key_val)
 
 # public key
-if False: #os.path.exists(PublicKey_path):
+if os.path.exists(PublicKey_path):
     print("already exist public key")
     print_public_key()
 else :
@@ -43,7 +43,7 @@ else :
     print_public_key()
 
 # private key
-if False: #os.path.exists(PrivateKey_path):
+if os.path.exists(PrivateKey_path):
     print("already exist public key")
     print_private_key()
 else :

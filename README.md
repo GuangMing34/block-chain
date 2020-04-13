@@ -1,66 +1,12 @@
+![image](./out.gif)
+- - -
+# è§£å†³Python Cryptoæ’ä»¶æ— æ³•importé—®é¢˜
+https://blog.csdn.net/Dennisqt/article/details/103927307
 
-
-[TOC]
-
-# English Version
-Èç¹ûÐèÒª¿´ÖÐÎÄ°æ£¬Çë[µãÕâÀï](#ÖÐÎÄ°æ)
-
-# What is the key point of this app
-
-As we all know, the one of the important features of block-chain is that data can't be modified once uploaded. So, the key point of this program is to create a block chain and upload, check, and maintain the record, rather than to get involved in how to encypt the file.
-
-## File Encryption
-About file ENc
-
-
----
-
-# ÖÐÎÄ°æ
-For English Version, plese [click me](#english-version)
-
-## ÖØµã
-blockchaninµÄ¹Ø¼üÊÇÊý¾ÝµÄ²»¿ÉÐÞ¸Ä£¬Õâ¸öÊÇºÍblockchainµÄÉè¼ÆÀíÄîÏà¹ØµÄ  
-ËùÒÔ±¾³ÌÐòÖØµã·½ÏòÊÇblockchain£¬¶ø²»ÊÇÎÄ¼þ¼ÓÃÜµÄ²¿·Ö.
->ÕâÀïÓÃÀ´½²ÊöÏà¹ØµÄÉè¼ÆÀíÄî  
-1  
-1  
-1  
-
-## ¼ÓÃÜµÄÃÜÂë
-ÎÄ¼þ¼ÓÃÜµÄ²¿·Ö£¬Ê¹ÓÃÒ»¸öÃÜÂë½øÐÐ¼ÓÃÜ, ÃÜÂëµÄÔ­Ê¼×Ö·û´®Ê¹ÓÃÉè±¸Î¨Ò»µÄID  
-ID²¿·Ö£¬¿ÉÒÔ²Î¿¼µÄÓÐHWµÄuuid£¬ÒÔ¼°Éè±¸µÄMACµØÖ·  
-UUID²¿·Ö£¬pythonÉÏ²»·½±ã»ñÈ¡£¬Ñ¡È¡MACµØÖ·½øÐÐÎÄ¼þ¼ÓÃÜ.   
-## ¼ÓÃÜµÄ·½Ê½
-¼òµ¥µã£¬ÓÃÒÔ¼ÓÃÜµÄÃÜÂë(ÉÏÃæ»ñÈ¡µ½µÄÉè±¸µÄÎ¨Ò»ID½øÐÐÔÙ¼ÓÃÜ)ºÍÎÄ¼þÄÚÈÝ½øÐÐ  
-Òì»ò´¦Àí£¬»òÕßpython¿â×Ô´øµÄ¼ÓÃÜ·½Ê½  
-
-## Á÷³Ì
-### ¼ÓÃÜ½×¶Î
-* **¼ì²âµ±Ç°µÄblock chainÊÇ·ñ³õÊ¼»¯¹ý.**  
-  * **Î´³õÊ¼»¯¹ý**
-    1. ´´½¨block chain(block chain³õÊ¼»¯)
-    2. Ìí¼Óµ±Ç°Éè±¸Îª¿ÉÐÅÉè±¸£¬²¢»ñÈ¡ID×÷ÎªÔ­Ê¼µÄÃÜÂë(µÚÒ»¸öblock¿é)
-    3. Ñ¯ÎÊÊÇ·ñÐèÒªÌí¼Ó±ðµÄ¿ÉÐÅÉè±¸
-       * Èç¹ûÐèÒª£¬ÊäÈë¿ÉÐÅÉè±¸µÄID£¬Ìí¼Ó¿ÉÐÅÉè±¸(blockÌí¼Ó), ·µ»Ø 3
-       * Èç¹û²»ÐèÒª£¬½áÊø.
-  * **³õÊ¼»¯¹ý**
-    > **³õÊ¼»¯µÄÎÄ¼þÓ¦¸Ã½ö´æÔÚÓÚ¿ÉÐÅÉè±¸ÖÐ£¬²»ÄÜ´æÔÚÓÚÆäËûÉè±¸ÉÏ**  
-
-    ¼ì²âµ±Ç°Éè±¸ÊÇ·ñ´æÔÚÓÚblockÖÐ
-      1. ²»ÔÚ£¬ÍË³ö²¢ÌáÊ¾Òì³£.
-      2. ÔÚ£¬½øÈëÊÇ·ñÌí¼Ó¿ÉÐÅÉè±¸µÄÑ­»·ÖÐ.
-* **»ñÈ¡blockÖÐµÄÃÜÂë**
-    
-    block¿ÉÄÜÓÐºÜ¶à¿é(¶à¸ö¿ÉÐÅÉè±¸)  
-    µ«ÊÇ±¾³ÌÐòÖÐ£¬Ã¿Ò»¸öblockÖÐ¶¼´æÔÚÍêÕûµÄ¼ÓÃÜÃÜÂë.
-    ËùÒÔ£¬****Ö»Òª»ñÈ¡µ½ÆäÖÐÒ»¸öblockÖÐ´æ´¢µÄÍêÕûÐÅÏ¢¼´¿É.****
-
-* **ÎÄ¼þ¼ÓÃÜ**
-
-    ¼ÓÃÜµÄÎÄ¼þÎÒÃÇ¾ÍÑ¡Ò»¸öwordÎÄ¼þ£¬ÕâÑùµÄ»°£¬¼ÓÃÜ¹ýºóÕý³£À´ËµÊÇ»áÎÞ·¨´ò¿ªµÄ.  
-    Èç¹ûÐèÒªÖ¸¶¨ÎÄ¼þ¼ÓÃÜµÄ»°£¬¿ÉÒÔ×ÔÐÐÌí¼Óº¯ÊýÈ¥ÊµÏÖÐÞ¸ÄÎÄ¼þÂ·¾¶£¬´ïµ½¶ÔÖ¸¶¨ÎÄ¼þ¼ÓÃÜµÄ·½Ê½
-### ½âÃÜ½×¶Î  
-* **ÎÄ¼þ½âÃÜ**  
-  
-    ½âÃÜµÄ»°£¬Ò²ÊÇÒ»ÑùµÄ£¬½âÃÜ½Å±¾ºÍÎÄ¼þ·ÅÔÚÍ¬Ò»Î»ÖÃ£¬·ÀÖ¹Ê¶±ð³ö´í.
-    Èç¹ûÐèÒªÖ¸¶¨ÎÄ¼þ½âÃÜµÄ»°, ºÍ¼ÓÃÜÒ»Ñù£¬×ÔÐÐÍêÉÆ¿ÉÒÔÐÞ¸ÄÂ·¾¶µÄ·½Ê½.
+# pythonå®‰è£…pycryptoåŒ…æ­¥éª¤åŠè¯­æ³•é”™è¯¯å¤„ç†
+## link
+https://jingyan.baidu.com/article/95c9d20d7784ebec4f75616e.html
+## error
+		Windowsç³»ç»ŸPython 3.6.1 åœ¨å®‰è£…pycryptoçš„è¿‡ç¨‹ä¸­æŠ¥é”™å¦‚ä¸‹
+		error C2061: è¯­æ³•é”™è¯¯: æ ‡è¯†ç¬¦â€œintmax_tâ€ï¼›
+		error C2059: è¯­æ³•é”™è¯¯:â€œ;â€ ï¼›
